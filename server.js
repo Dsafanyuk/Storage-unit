@@ -6,6 +6,7 @@ var morgan = require('morgan');
 var db =  "mongodb://dsafanyuk:david1@ds113640.mlab.com:13640/storage-unit";
 var router = express.Router();
 var app = express();
+var port = process.env.PORT || 3000;
 mongoose.connect(db, function(err, response){
     if(err)
     {
@@ -71,6 +72,6 @@ router.delete('/api/users/:id', function(request, response){
 
 
 
-app.listen(3000, function(){
-    console.log('Listening on port 3000');
+app.listen(port, function(){
+    console.log('Listening on ' + port);
 });
