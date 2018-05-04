@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+
+<head>
+    <title>Storage Unit</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script>
+        var app = angular.module('app', ['ngRoute']);
+        app.controller('HomeController', function ($http) {
+            var vm = this;
+            vm.users = [];
+			vm.getUsers = function(){
+				$http.get('/api/users').then(function(response){
+					vm.users = response.data;
+				});
+			}
+            vm.getUsers();
+            vm.editUser   = function(user){
+                if(user){
+                    $http.put(/api/users)
+                }
+            }
+            vm.removeUser = function(user){
+                console.log(user);
+                if(user){
+                    $http.delete('/api/users/' + user._id).then(function(response){
+                        vm.getUsers();
+                    })
+                }
+                
+            }
+            vm.addUser = function(user){
+                if(user && user.name && user.phone){
+                    $http.post('/api/users', user).then(function(response){
+                        vm.getUsers();
+                        vm.user = '';
+                    })
+                }
+            };
+            
+            return true;
+        });
+        app.config(function ($routeProvider) {
+            $routeProvider.when('/', {
+                controller: 'HomeController',
+                controllerAs: 'vm',
+                templateUrl: './home.html'
+            });
+            $routeProvider.otherwise('/');
+        });
+    </script>
+    <script src="https://code.angularjs.org/1.6.9/angular-route.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div ng-view></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<div class="container">
+    <h1>{{vm.title}}</h1>
+    <div class="container users-container">
+        <table class="table table-bordered table-striped table-hover table-condensed">
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Action</th>
+            <tr ng-repeat="user in vm.users">
+                <td>{{user.name}}</td>
+                <td>{{user.phone}}</td>
+                <td>
+                    <button class="btn btn-warning">Edit</button>
+                    <button class="btn btn-danger" ng-click="vm.removeUser(user);">Delete</button>
+                </td>
+            </tr>
+        </table>
+        <button class="btn btn-primary btn-md" ng-hide="vm.adduser == true" ng-click="vm.adduser=!vm.adduser">Add a user</button>
+    </div>
+    <div class="container create-users" ng-hide="!vm.adduser">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input required type="text" id="name" class="form-control" style="width: 300px;" ng-model="vm.user.name">
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone</label>
+            <input required type="number" class="form-control" id="phone" style="width: 300px;" ng-model="vm.user.phone">
+        </div>
+        <button class="btn btn-success" ng-click="vm.addUser(vm.user)" ng-disabled="!vm.user.name || !vm.user.phone">Add</button>
+        <button class="btn btn-primary" ng-click="vm.adduser = false" >Back</button>
+
+    </div>
+</div>
