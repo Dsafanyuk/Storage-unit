@@ -19,11 +19,14 @@
 				});
 			}
             vm.getUsers();
-            /* vm.editUser   = function(user){
+            vm.editUser   = function(user){
                 if(user){
-                    $http.put(/api/users)
+                    $http.put('/api/users', user).then(function (response){
+                        console.log('Update User:' + user.name);
+                        vm.getUsers();
+                    });
                 }
-            } */
+            }
             vm.removeUser = function(user){
                 console.log(user);
                 if(user){
