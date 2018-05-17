@@ -88,7 +88,7 @@ router.put('/api/users', function(request, response){
 				}
 			});
 		}
-	})
+	});
 
 });
 
