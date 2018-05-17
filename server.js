@@ -13,7 +13,7 @@ mongoose.connect(db, function(err, response){
         console.log('Failed to connect to db');
     }
     else{
-        console.log('Connected to' + db);
+        console.log('Connected to ' + db);
     }
 });
 
@@ -31,6 +31,7 @@ router.get('/api/users', function(request,response){
     Model.find({}, function(err, users){
         if(err){
             response.status(404).send(err);
+            console.log("something went wrong with GET");
         }
         else{
             response.status(200).send(users);
@@ -41,8 +42,11 @@ router.get('/api/users', function(request,response){
 //Post
 router.post('/api/users', function(request, response){
     var model = new Model();
+    console.log(request.body);
     model.name = request.body.name;
     model.phone = request.body.phone;
+    model.paymentInfo.paidStatus = request.body.paymentInfo.paidStatus;
+    console.log("POSTing" + model);
     model.save(request.body, function(err, user){
         if(err){
             response.status(500).send(err);
@@ -77,18 +81,16 @@ router.put('/api/users', function(request, response){
 		else {
 			user.update(request.body, function(err, success){
 				if(err){
-					response.send(err)
+					response.send(err);
 				}
 				else {
-					response.status(200).send({message: 'success'})
+					response.status(200).send({message: 'success'});
 				}
 			});
 		}
 	})
 
 });
-
-
 
 
 app.listen(port, function(){

@@ -26,9 +26,10 @@
 			}
             vm.getUsers();
             vm.editUser   = function(user){
+                console.log(user)
                 if(user){
                     $http.put('/api/users', user).then(function (response){
-                        console.log('Update User:' + user.name);
+                        console.log('Update User: ' + user.name);
                         vm.getUsers();
                     });
                 }
@@ -43,12 +44,15 @@
                 
             }
             vm.addUser = function(user){
+                console.log(user);
                 if(user && user.name && user.phone){
                     $http.post('/api/users', user).then(function(response){
                         vm.getUsers();
-                        vm.user = '';
+                        vm.user = [];
                     })
                 }
+                else
+                console.log('failed when false user');
             };
             
             return true;
