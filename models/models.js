@@ -4,7 +4,8 @@ var UsersSchema = new Schema({
     name: String,
     phone: Number,
     paymentInfo:{
-        paidStatus: Boolean
+        paidStatus: Boolean,
+        amountPaid: Number
     }
 });
 

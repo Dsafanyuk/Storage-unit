@@ -17,11 +17,23 @@
             
 			vm.showDetails = function(user){
 				vm.detailedUser = user;
-				vm.detailed = true;
+                vm.detailed = true;
+                if(user.paymentInfo.paidStatus == true)
+                {
+                    vm.paidStatus = true;
+                    console.log(vm.paidStatus);
+                }
+                else if (user.paymentInfo.paidStatus == false)
+                {
+                    vm.paidStatus = false;
+                    console.log(vm.paidStatus);
+                }
+                else
+                    console.log('Undefined Status')
 			}
 			vm.getUsers = function(){
 				$http.get('/api/users').then(function(response){
-					vm.users = response.data;
+                    vm.users = response.data;
 				});
 			}
             vm.getUsers();
@@ -35,7 +47,6 @@
                 }
             }
             vm.removeUser = function(user){
-                console.log(user);
                 if(user){
                     $http.delete('/api/users/' + user._id).then(function(response){
                         vm.getUsers();
@@ -44,11 +55,13 @@
                 
             }
             vm.addUser = function(user){
-                console.log(user);
+                console.log("Adding " + user);
                 if(user && user.name && user.phone){
                     $http.post('/api/users', user).then(function(response){
                         vm.getUsers();
-                        vm.user = [];
+                        vm.user = {};
+                        vm.adduser = false;
+                        vm.paidStatus = false;
                     })
                 }
                 else

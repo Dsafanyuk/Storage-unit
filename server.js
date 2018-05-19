@@ -20,12 +20,6 @@ mongoose.connect(db, function(err, response){
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true }));
 
-app.use(morgan('dev'));
-
-app.use(express.static(__dirname + '/public'));
-app.use('/', router);
-
-
 //GET
 router.get('/api/users', function(request,response){
     Model.find({}, function(err, users){
@@ -42,13 +36,14 @@ router.get('/api/users', function(request,response){
 //Post
 router.post('/api/users', function(request, response){
     var model = new Model();
-    console.log(request.body);
     model.name = request.body.name;
     model.phone = request.body.phone;
     model.paymentInfo.paidStatus = request.body.paymentInfo.paidStatus;
+    model.paymentInfo.amountPaid = request.body.paymentInfo.amountPaid;
     console.log("POSTing" + model);
     model.save(request.body, function(err, user){
         if(err){
+            console.log('POST ERROR');
             response.status(500).send(err);
         }
         else {
@@ -73,7 +68,6 @@ router.delete('/api/users/:id', function(request, response){
 
 //Put
 router.put('/api/users', function(request, response){
-
 	Model.findById(request.body._id, function(err, user){
 		if(err){
 			response.status(404).send(err);
@@ -91,6 +85,13 @@ router.put('/api/users', function(request, response){
 	});
 
 });
+
+app.use('/', router);
+app.use(morgan('dev'));
+
+app.use(express.static(__dirname + '/public'));
+
+
 
 
 app.listen(port, function(){

@@ -1,16 +1,15 @@
 <div class="container">
 	<h1>{{vm.title}}</h1>
-
 	<div class="container users-container">
 		<table class="table table-bordered table-striped table-hovered table-condensed" ng-hide="vm.detailed">
 			<th>Name</th>
 			<th>Phone</th>
-			<th>Paid?</th>
+			<th>Amount Paid</th>
 			<th>Actions</th>
 			<tr ng-repeat="user in vm.users">
-				<td style="cursor: pointer;" ng-if="!editing" ng-click="vm.showDetails(user)">{{user.name}}</td>
-				<td style="cursor: pointer;" ng-if="!editing" ng-click="vm.showDetails(user)">{{user.phone}}</td>
-				<td style="cursor: pointer;" ng-if="!editing" ng-click="vm.showDetails(user)">{{user.paymentInfo.paidStatus}}</td>
+				<td style="cursor: pointer;" ng-if="!editing" ng-click="vm.showDetails(user);vm.adduser=false">{{user.name}}</td>
+				<td style="cursor: pointer;" ng-if="!editing" ng-click="vm.showDetails(user);vm.adduser=false">{{user.phone}}</td>
+				<td style="cursor: pointer;" ng-if="!editing" ng-click="vm.showDetails(user);vm.adduser=false">{{user.paymentInfo.paidStatus === true ? user.paymentInfo.amountPaid : "0.00"}}</td>
 				<td ng-if="editing">
 					<input type="text" ng-model="user.name" class="form-control" style="width:100px;">
 				</td>
@@ -41,12 +40,16 @@
 			<label for="phone">Phone</label>
 			<input required type="number" id="phone" class="form-control" style="width:300px;" ng-model="vm.user.phone">
 		</div>
-		<div class="form-group">
+		<div class="form-group" >
 			<label for="paymentInfo.paidStatus">Paid?</label><br>
-			Yes<input type="radio" id="paymentInfo.paidStatus"  ng-value="true"  style="width:300px;" ng-model="vm.user.paymentInfo.paidStatus"><br>
-			No&nbsp;<input type="radio" id="paymentInfo.paidStatus" ng-value="false" style="width:300px;" ng-model="vm.user.paymentInfo.paidStatus">
+			Yes<input type="radio" id="paymentInfo.paidStatus"  ng-click="inputMoney=true" ng-value="true"  style="width:300px;" ng-model="vm.user.paymentInfo.paidStatus"><br>
+			No&nbsp;<input type="radio" id="paymentInfo.paidStatus" ng-click="inputMoney=false"ng-value="false" style="width:300px;" ng-model="vm.user.paymentInfo.paidStatus">
 		</div>
-		<button class="btn btn-success" ng-click="vm.addUser(vm.user)" ng-disabled="!vm.user.name || !vm.user.phone || (!vm.user.paymentInfo.paidStatus || !vm.user.paymentInfo.paidStatus)">Add</button>
+		<div class="form-group" ng-hide="!inputMoney">
+			<label for="paymentInfo.amountPaid">Amount: </label><br>
+			<input ng-required="vm.user.paymentInfo.paidStatus" type="number" id="paymentInfo.amountPaid" class="form-control" style="width:300px;" ng-model="vm.user.paymentInfo.amountPaid">
+		</div>
+		<button class="btn btn-success" ng-click="vm.addUser(vm.user)" ng-disabled="!vm.user.name || !vm.user.phone">Add</button>
 		<button class="btn btn-primary" ng-click="vm.adduser = false;" >Back</button>
 	</div>
 	<div class="container details-container" ng-if="vm.detailed === true">
@@ -54,7 +57,8 @@
 			<div class="close" style="font-size: 50px; color: black" ng-click="vm.detailed=false;">X</div>
 			<h3>Name:  {{vm.detailedUser.name}}</h3>
 			<h3>Phone: {{vm.detailedUser.phone}}</h3>
-			<h3>Paid:  {{vm.detailedUser.paymentInfo.paidStatus}}</h3>
+			<h3 ng-hide="!vm.paidStatus">Amount Paid:  {{vm.detailedUser.paymentInfo.amountPaid}}</h3>
+			<h3 ng-hide="vm.paidStatus"> Not Paid</h3>
 		</div>
 	</div>
 
