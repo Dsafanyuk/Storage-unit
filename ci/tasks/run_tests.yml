@@ -8,9 +8,9 @@ image_resource:
     tag: latest
 
 inputs:
-  - name: hello_hapi
+  - name: start-node
   - name: dependency-cache
 
 run:
-  path: hello_hapi/ci/scripts/run_tests.sh
+  path: Storage-unit-node/ci/scripts/run_tests.sh
 

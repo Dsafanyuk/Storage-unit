@@ -2,6 +2,6 @@
 
 set -e -u -x
 
-mv dependency-cache/node_modules hello_hapi
-cd hello_hapi && npm test
+mv dependency-cache/node_modules Storage-unit-node
+cd Storage-unit-node && npm test
 
