@@ -8,7 +8,7 @@ image_resource:
     tag: latest
 
 inputs:
-  - name: start-node
+  - name: Storage-unit-node
   - name: dependency-cache
 
 run:
