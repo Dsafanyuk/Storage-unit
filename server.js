@@ -7,6 +7,7 @@ var db =  "mongodb://dsafanyuk:david1@ds113640.mlab.com:13640/storage-unit";
 var router = express.Router();
 var app = express();
 var port = process.env.PORT || 3000;
+var ip = require('ip')
 mongoose.connect(db, function(err, response){
     if(err)
     {
@@ -96,4 +97,6 @@ app.use(express.static(__dirname + '/public'));
 
 app.listen(port, function(){
     console.log('Listening on ' + port);
+    console.dir ( ip.address() );
+
 });
